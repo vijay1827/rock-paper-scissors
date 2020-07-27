@@ -8,3 +8,5 @@ play "Rock Paper Scissors" with your computer using computer vision.
 4. install the required packages for the game to run using: `pip install -r requirements.txt`
 5. run the code: `python file_name.py`
 6. make sure to `deactivate` once your done.
+
+Instructions about the task can be found [here](instructions.md)
