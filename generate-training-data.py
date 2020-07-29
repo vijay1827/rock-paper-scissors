@@ -1,5 +1,6 @@
 import os
 import cv2
+import time
 cam = cv2.VideoCapture(0)
 
 a = int(input("Enter \n1 stone\n2 empty\n3 scissor\n4 paper\n------"))
@@ -25,6 +26,7 @@ while True:
         # SPACE pressed
         if a == 1:
             for i in range(100):
+                time.sleep(0.1)
                 img_name = "stone_{}.png".format(img_counter)
                 cv2.imwrite(img_name, frame)
                 print("{} written!".format(img_name))
@@ -33,6 +35,7 @@ while True:
 
         elif a == 2:
             for i in range(100):
+                time.sleep(0.1)
                 img_name = "empty_{}.png".format(img_counter)
                 cv2.imwrite(img_name, frame)
                 print("{} written!".format(img_name))
@@ -41,6 +44,7 @@ while True:
 
         elif a == 3:
             for i in range(100):
+                time.sleep(0.1)
                 img_name = "scissor_{}.png".format(img_counter)
                 cv2.imwrite(img_name, frame)
                 print("{} written!".format(img_name))
@@ -49,6 +53,7 @@ while True:
 
         else:
             for i in range(100):
+                time.sleep(0.1)
                 img_name = "papaer_{}.png".format(img_counter)
                 cv2.imwrite(img_name, frame)
                 print("{} written!".format(img_name))
