@@ -1,71 +1,20 @@
 import os
 import cv2
+import sys
 import time
-cam = cv2.VideoCapture(0)
 
-a = int(input("Enter \n1 stone\n2 empty\n3 scissor\n4 paper\n------"))
-
-cv2.namedWindow("img")
-img_counter = 0
-
-while True:
-    ret, frame = cam.read()
-    cv2.imshow('img', frame)
-    if not ret:
-        print("failed to grab frame")
-        break
-
-    k = cv2.waitKey(1)
-    if k % 256 == 27:
-        # ESC pressed
-        print("closing...")
-        break
-
-
-    elif k%256 == 32:
-        # SPACE pressed
-        if a == 1:
-            for i in range(100):
-                time.sleep(0.1)
-                img_name = "stone_{}.png".format(img_counter)
-                cv2.imwrite(img_name, frame)
-                print("{} written!".format(img_name))
-                img_counter += 1
-                i+=1
-
-        elif a == 2:
-            for i in range(100):
-                time.sleep(0.1)
-                img_name = "empty_{}.png".format(img_counter)
-                cv2.imwrite(img_name, frame)
-                print("{} written!".format(img_name))
-                img_counter += 1
-                i+=1
-
-        elif a == 3:
-            for i in range(100):
-                time.sleep(0.1)
-                img_name = "scissor_{}.png".format(img_counter)
-                cv2.imwrite(img_name, frame)
-                print("{} written!".format(img_name))
-                img_counter += 1
-                i+=1
-
-        else:
-            for i in range(100):
-                time.sleep(0.1)
-                img_name = "papaer_{}.png".format(img_counter)
-                cv2.imwrite(img_name, frame)
-                print("{} written!".format(img_name))
-                img_counter += 1
-                i+=1
-
-
-cam.release()
-
-cv2.destroyAllWindows()
 # write your code here to open your laptop's camera
 # and store images for rock paper scissors
+cap = cv2.VideoCapture(0)
+cur_dir= os.getcwd() +'/' + 'training_data'  #current directory
+n = int(sys.argv[2])  #number of images to be captured
+folder_create = os.path.join(cur_dir, sys.argv[1]) #folder (with path) to be created
+print(sys.argv[2])
+print(sys.argv[1])
+try:
+    os.mkdir(folder_create)
+except FileExistsError:
+    pass
 
 # I would highly recommend storing these images in folders stucture like below:
 # training_data\
@@ -74,3 +23,30 @@ cv2.destroyAllWindows()
 #           |-- paper\
 #           |-- scissors\
 # having a folder structure like this will make it easy for you to read the images while pre-processing
+img_counter=0
+while img_counter<n:
+	ret, frame = cap.read()
+
+	if not ret:
+	    print("failed to capture frame")
+	    cap.release()
+	    cv2.destroyAllWindows()
+
+	cv2.rectangle(frame, (100, 350), (450, 50), (0, 255, 0),15)
+	cv2.imshow('capturing Gesture  : '+sys.argv[1],frame)
+	k = cv2.waitKey(1)
+	if k%256 == 27:#  if ESC pressed
+		print("Escape hit, closing...")
+		cap.release()
+		cv2.destroyAllWindows()
+	elif k%256 == 32: #if SPACE pressed
+		for  i in range(n):
+			time.sleep(0.1)
+			img_name = "frame_{}.png".format(img_counter)
+			cv2.imwrite(folder_create+'/'+sys.argv[1]+'{}.jpg'.format(img_counter),frame[50:350,100:450])
+			print("{} written!".format(img_name))
+			print(folder_create+'/'+sys.argv[1]+'{}.jpg Captured'.format(img_counter))
+			img_counter += 1
+
+cap.release()
+cv2.destroyAllWindows()
