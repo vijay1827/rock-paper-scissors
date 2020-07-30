@@ -40,13 +40,11 @@ while img_counter<n:
 		cap.release()
 		cv2.destroyAllWindows()
 	elif k%256 == 32: #if SPACE pressed
-		for  i in range(n):
-			time.sleep(0.1)
-			img_name = "frame_{}.png".format(img_counter)
-			cv2.imwrite(folder_create+'/'+sys.argv[1]+'{}.jpg'.format(img_counter),frame[50:350,100:450])
-			print("{} written!".format(img_name))
-			print(folder_create+'/'+sys.argv[1]+'{}.jpg Captured'.format(img_counter))
-			img_counter += 1
+		img_name = "frame_{}.png".format(img_counter)
+		cv2.imwrite(folder_create+'/'+sys.argv[1]+'{}.jpg'.format(img_counter),frame[50:350,100:450])
+		print("{} written!".format(img_name))
+		print(folder_create+'/'+sys.argv[1]+'{}.jpg Captured'.format(img_counter))
+		img_counter += 1
 
 cap.release()
 cv2.destroyAllWindows()
