@@ -2,7 +2,7 @@ import os
 import cv2
 from model import generate_model
 
-TRAINING_DATA_DIR = "training_data"
+TRAINING_DATA_DIR = "C:\\Users\\vijay\\PycharmProjects\\opencv_begin\\venv\\training_data"
 
 # here write code to pre process the images as required
 # but make sure to have a copy of the original training data
@@ -10,7 +10,11 @@ TRAINING_DATA_DIR = "training_data"
 # pre-processing on the fly is possible because this is small project and
 # not a lot of images will be there as well.
 def preprocess(img):
-    # your code goes here
+    width = 225
+    height = 225
+    dimensions = (width, height)
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+    img = cv2.resize(img, dimensions, interpolation=cv2.INTER_CUBIC)
     return img
 
 # NOTE: This method will only work if you have followed the same folder strucutre as I mentioned
@@ -27,11 +31,13 @@ def get_dataset():
         for image_file in os.listdir(path):
             # loading each image
             img = cv2.imread(os.path.join(path, image_file))
-            img = preprocess(img)           
+            img = preprocess(img)
             # adding them to the dataset
             dataset.append([img, label_dir])
-    
+
+
     return zip(*dataset)
+
 
 def main():
     # this line will get the data pre-process the image
@@ -40,6 +46,7 @@ def main():
     X, y = get_dataset()
     # this line will generate a tensorflow model and save it as rock-paper-scissors-model.h5 file
     generate_model(X, y)
+
 
 if __name__ == "__main__":
     main()
