@@ -13,7 +13,7 @@ def preprocess(img):
     width = 225
     height = 225
     dimensions = (width, height)
-    img = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+    img = cv2.cvtColor(img, cv2.GaussianBlur)
     img = cv2.resize(img, dimensions, interpolation=cv2.INTER_CUBIC)
     return img
 
